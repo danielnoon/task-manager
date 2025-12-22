@@ -79,18 +79,21 @@ export default function TaskInput({
         isSubmittingRef.current = true;
         try {
             // Send everything to addTask - it handles both creation and commands
-            await addTask(content);
-            setValue('');
-            onAfterSubmit?.();
-        } catch (error: any) {
-            // Check if this was a successful command execution
-            if (error.message && error.message.startsWith('Command processed:')) {
-                console.log(error.message);
-                setValue(''); // Clear input on success
-                // In a real app we'd show a toast here
-            } else {
-                console.error('Failed to add task:', error);
+            const result = await addTask(content);
+
+            // Handle the result using discriminated union
+            if (result.type === 'task_created') {
+                // Task was successfully created
+                setValue('');
+                onAfterSubmit?.();
+            } else if (result.type === 'command_executed') {
+                // Command was successfully executed
+                console.log(result.message);
+                setValue('');
+                onAfterSubmit?.();
             }
+        } catch (error: any) {
+            console.error('Failed to add task:', error);
         } finally {
             isSubmittingRef.current = false;
         }
