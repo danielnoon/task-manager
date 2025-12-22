@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTaskStore } from '../stores/taskStore';
+import './SettingsModal.css';
 
 interface SettingsModalProps {
     isOpen: boolean;

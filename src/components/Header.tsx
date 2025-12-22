@@ -1,4 +1,5 @@
 import { useTaskStore } from '../stores/taskStore';
+import './Header.css';
 
 interface HeaderProps {
     onSettingsClick: () => void;

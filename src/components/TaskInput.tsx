@@ -1,5 +1,6 @@
 import { useState, KeyboardEvent, useMemo, useRef, useEffect } from 'react';
 import { useTaskStore } from '../stores/taskStore';
+import './TaskInput.css';
 
 export default function TaskInput({
     onAfterSubmit,

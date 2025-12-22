@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useTaskStore } from '../stores/taskStore';
 import TaskCard from './TaskCard';
 import { motion, AnimatePresence } from 'framer-motion';
+import './Dashboard.css';
 
 export default function Dashboard() {
     const {

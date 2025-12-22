@@ -2,6 +2,7 @@ import { CSSProperties, useState, useRef, useEffect } from 'react';
 import { Task } from '../lib/types';
 import { useTaskStore } from '../stores/taskStore';
 import { formatDistanceToNow, isToday, isPast, format, addDays, nextMonday } from 'date-fns';
+import './TaskCard.css';
 
 interface TaskCardProps {
     task: Task;

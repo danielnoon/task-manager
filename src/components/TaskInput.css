@@ -1,0 +1,155 @@
+/* ========================================
+   Task Input Component — Premium Feel
+   ======================================== */
+
+.task-input-wrapper {
+    position: relative;
+    /* Stretch beyond content margins for emphasis */
+    margin-left: calc(var(--space-3) * -1);
+    margin-right: calc(var(--space-3) * -1);
+    /* Extra vertical breathing room */
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-3);
+}
+
+.task-input {
+    width: 100%;
+    padding: var(--space-5) var(--space-6);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--font-regular);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow:
+        var(--shadow-inset-subtle),
+        inset 0 2px 4px rgba(0, 0, 0, 0.06);
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-base);
+}
+
+.task-input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.6;
+    font-weight: var(--font-light);
+}
+
+.task-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow:
+        var(--shadow-inset-subtle),
+        inset 0 2px 4px rgba(0, 0, 0, 0.06),
+        0 0 0 3px var(--color-accent-subtle),
+        var(--glow-accent-soft);
+}
+
+.task-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Input Hints */
+.input-hint {
+    position: absolute;
+    right: var(--space-5);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: var(--text-xs);
+    font-weight: var(--font-regular);
+    color: var(--color-text-faint);
+    pointer-events: none;
+    letter-spacing: var(--tracking-wide);
+}
+
+.input-hint.adding-note-hint {
+    color: var(--color-accent);
+}
+
+/* Command mode padding */
+.task-input.is-command {
+    padding-right: 200px;
+}
+
+.input-hint.command-hint,
+.input-hint.no-match {
+    right: var(--space-5);
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
+    color: var(--color-accent);
+    font-weight: var(--font-medium);
+    letter-spacing: var(--tracking-normal);
+}
+
+.input-hint.no-match {
+    color: var(--color-error);
+}
+
+/* Adding note mode */
+.task-input.adding-note {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent-muted);
+}
+
+/* @ Mention Autocomplete */
+.mention-suggestions {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    left: 0;
+    right: 0;
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    z-index: 100;
+}
+
+.mention-suggestion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--color-border-subtle);
+    cursor: pointer;
+    text-align: left;
+    transition: background-color var(--transition-fast);
+}
+
+.mention-suggestion:last-child {
+    border-bottom: none;
+}
+
+.mention-suggestion:hover,
+.mention-suggestion.selected {
+    background-color: var(--color-bg-hover);
+}
+
+.suggestion-content {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.suggestion-category {
+    margin-left: var(--space-3);
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--text-2xs);
+    font-weight: var(--font-medium);
+    color: var(--color-accent);
+    background-color: var(--color-accent-subtle);
+    border-radius: var(--radius-full);
+    text-transform: capitalize;
+}

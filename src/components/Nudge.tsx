@@ -1,4 +1,5 @@
 import { Nudge as NudgeType } from '../lib/types';
+import './Nudge.css';
 
 interface NudgeProps {
     todayCount: number;

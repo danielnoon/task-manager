@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import TaskInput from './TaskInput';
 import '../App.css';
-
+import './QuickEntryApp.css';
 import { useTaskStore } from '../stores/taskStore';
 
 export default function QuickEntryApp() {

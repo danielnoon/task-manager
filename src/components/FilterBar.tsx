@@ -1,6 +1,7 @@
 import { useTaskStore } from '../stores/taskStore';
 import { ViewFilter } from '../lib/types';
 import { motion, AnimatePresence } from 'framer-motion';
+import './FilterBar.css';
 
 const filters: { key: ViewFilter; label: string }[] = [
     { key: 'today', label: 'Today' },

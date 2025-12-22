@@ -3,6 +3,7 @@ import { ViewFilter } from '../lib/types';
 import TaskCard from './TaskCard';
 import { useTaskStore } from '../stores/taskStore';
 import { motion, AnimatePresence } from 'framer-motion';
+import './TaskList.css';
 
 interface TaskListProps {
     tasks: Task[];
