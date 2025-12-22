@@ -13,6 +13,16 @@ if (root) {
         document.documentElement.classList.add('quick-entry-mode');
     }
 
+    // Detect platform for platform-specific styles
+    const userAgent = navigator.userAgent.toLowerCase();
+    if (userAgent.includes('win')) {
+        document.body.classList.add('windows');
+    } else if (userAgent.includes('mac')) {
+        document.body.classList.add('macos');
+    } else if (userAgent.includes('linux')) {
+        document.body.classList.add('linux');
+    }
+
     createRoot(root).render(
         <StrictMode>
             {isQuickEntry ? <QuickEntryApp /> : <App />}

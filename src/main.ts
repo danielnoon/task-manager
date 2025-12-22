@@ -130,8 +130,17 @@ const createWindow = async () => {
     minWidth: 400,
     minHeight: 500,
     backgroundColor: '#1A1917',
-    titleBarStyle: 'hiddenInset',
-    trafficLightPosition: { x: 16, y: 16 },
+    ...(process.platform === 'darwin' ? {
+      titleBarStyle: 'hiddenInset',
+      trafficLightPosition: { x: 20, y: 20 },
+    } : process.platform === 'win32' ? {
+      titleBarStyle: 'hidden',
+      titleBarOverlay: {
+        color: '#1A1917',
+        symbolColor: '#E0E0E0',
+        height: 60,
+      }
+    } : {}),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,

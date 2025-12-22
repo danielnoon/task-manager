@@ -12,6 +12,7 @@ import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-nati
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
+    icon: './icons/icon', // Electron Forge will automatically append .icns/.ico/.png based on platform
     // Explicitly include native modules that need to be available at runtime
     // This regex ignores everything in node_modules EXCEPT better-sqlite3 and its deps
     ignore: [
@@ -20,10 +21,20 @@ const config: ForgeConfig = {
   },
   rebuildConfig: {},
   makers: [
-    new MakerSquirrel({}),
+    new MakerSquirrel({
+      setupIcon: './icons/icon.ico',
+    }),
     new MakerZIP({}, ['darwin']),
-    new MakerRpm({}),
-    new MakerDeb({}),
+    new MakerRpm({
+      options: {
+        icon: './icons/icon.png',
+      },
+    }),
+    new MakerDeb({
+      options: {
+        icon: './icons/icon.png',
+      },
+    }),
   ],
   plugins: [
     new AutoUnpackNativesPlugin({}),
