@@ -1,0 +1,71 @@
+/* ==================== ProgressRing Component ==================== */
+
+.ui-progress-ring {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ui-progress-ring__svg {
+  display: block;
+  transform: rotate(-90deg);
+}
+
+.ui-progress-ring__bg {
+  fill: transparent;
+  stroke: var(--color-bg-elevated);
+}
+
+.ui-progress-ring__fill {
+  fill: transparent;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Color variants */
+.ui-progress-ring__fill--accent {
+  stroke: var(--color-accent);
+}
+
+.ui-progress-ring__fill--success {
+  stroke: var(--color-success);
+}
+
+.ui-progress-ring__fill--warning {
+  stroke: #F59E0B;
+}
+
+.ui-progress-ring__fill--error {
+  stroke: #EF4444;
+}
+
+/* Content overlay (label) */
+.ui-progress-ring__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-progress-ring__value {
+  font-family: var(--font-display);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+/* Size-specific label sizing */
+.ui-progress-ring[style*="width: 44px"] .ui-progress-ring__value,
+.ui-progress-ring[style*="width: 48px"] .ui-progress-ring__value {
+  font-size: var(--text-xs);
+}
+
+.ui-progress-ring[style*="width: 100px"] .ui-progress-ring__value {
+  font-size: var(--text-2xl);
+}
+
+.ui-progress-ring[style*="width: 56px"] .ui-progress-ring__value,
+.ui-progress-ring[style*="width: 64px"] .ui-progress-ring__value {
+  font-size: var(--text-sm);
+}

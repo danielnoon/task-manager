@@ -1,0 +1,63 @@
+/* ==================== Card Component ==================== */
+
+.ui-card {
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+}
+
+.ui-card--no-border {
+  border: none;
+}
+
+/* Padding variants */
+.ui-card--padding-none {
+  padding: 0;
+}
+
+.ui-card--padding-sm {
+  padding: var(--space-3);
+}
+
+.ui-card--padding-md {
+  padding: var(--space-4);
+}
+
+.ui-card--padding-lg {
+  padding: var(--space-6);
+}
+
+/* Variant: Default */
+.ui-card--default {
+  background: var(--gradient-card);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Variant: Interactive */
+.ui-card--interactive {
+  cursor: pointer;
+  background: var(--gradient-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.ui-card--interactive.ui-card--hover:hover {
+  background-color: var(--color-bg-hover);
+  transform: translateY(-1px);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+/* Variant: Elevated */
+.ui-card--elevated {
+  background: var(--gradient-card);
+  box-shadow: var(--shadow-md);
+}
+
+.ui-card--elevated.ui-card--hover:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-border);
+  box-shadow:
+    var(--shadow-lg),
+    var(--glow-accent-soft);
+}

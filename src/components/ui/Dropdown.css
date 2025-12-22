@@ -1,0 +1,54 @@
+/* ==================== Dropdown Component ==================== */
+
+.ui-dropdown {
+  position: absolute;
+  min-width: 160px;
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  overflow: hidden;
+}
+
+/* Drop down variant (default) */
+.ui-dropdown--drop-down {
+  top: 100%;
+  left: 0;
+  margin-top: var(--space-1);
+}
+
+/* Drop up variant when not enough space below */
+.ui-dropdown--drop-up {
+  bottom: 100%;
+  left: 0;
+  margin-bottom: var(--space-1);
+}
+
+.ui-dropdown__item {
+  display: block;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.ui-dropdown__item:last-child {
+  border-bottom: none;
+}
+
+.ui-dropdown__item:hover:not(.ui-dropdown__item--disabled) {
+  background-color: var(--color-bg-hover);
+}
+
+.ui-dropdown__item--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
