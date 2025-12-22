@@ -112,10 +112,6 @@ export default function Dashboard() {
             <div className="dashboard-content">
                 {focusTasks.length > 0 && (
                     <section className="task-section focus-section">
-                        <h2 className="section-title">
-                            <span className="section-icon">🎯</span>
-                            Focus Queue
-                        </h2>
                         <motion.div
                             className="task-grid"
                             variants={containerVariants}

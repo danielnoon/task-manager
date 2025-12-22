@@ -9,8 +9,14 @@ import { TaskAnalysis, Priority, RecurrenceType } from '../lib/types';
 let anthropicClient: ReturnType<typeof createAnthropic> | null = null;
 
 export function initializeAI(apiKey: string) {
+    // Clear environment variables that might interfere with app settings
+    // This ensures the app uses its own API key and base URL, not system-level Claude Code config
+    delete process.env.ANTHROPIC_API_KEY;
+    delete process.env.ANTHROPIC_BASE_URL;
+
     anthropicClient = createAnthropic({
         apiKey,
+        baseURL: 'https://api.anthropic.com/v1', // Explicit default base URL
     });
 }
 

@@ -8,8 +8,8 @@
 
   --color-text-primary: #FAF9F7;
   --color-text-secondary: #B8B5B0;
-  --color-text-muted: #6B6862;
-  --color-text-faint: #4A4744;
+  --color-text-muted: #8A8680;
+  --color-text-faint: #6B6862;
 
   /* Accent — Warm Amber */
   --color-accent: #E08A24;
@@ -46,7 +46,7 @@
   --glow-accent-strong: 0 0 60px rgba(224, 138, 36, 0.25);
 
   /* Typography — Refined Scale */
-  --font-display: 'Newsreader', Georgia, serif;
+  --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Type Scale — More Expressive Range */
@@ -162,6 +162,11 @@
 
   --color-border: #E5E4E2;
   --color-border-subtle: rgba(0, 0, 0, 0.04);
+
+  /* Gradients for light theme */
+  --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #FAFAF9 100%);
+  --gradient-bg-radial: radial-gradient(ellipse at 50% 0%, rgba(224, 138, 36, 0.04) 0%, transparent 50%);
+  --gradient-bg-subtle: radial-gradient(ellipse at 50% 100%, rgba(224, 138, 36, 0.02) 0%, transparent 40%);
 
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-sm:
