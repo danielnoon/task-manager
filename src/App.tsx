@@ -8,32 +8,8 @@ import Dashboard from './components/Dashboard';
 import FilterBar from './components/FilterBar';
 import Nudge from './components/Nudge';
 import SettingsModal from './components/SettingsModal';
+import { staggerContainer, fadeInUp, fadeIn, quickFade } from './constants/animations';
 import './App.css';
-
-// Animation variants for staggered entrance
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.06,
-            delayChildren: 0.05
-        }
-    }
-};
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 16 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            type: 'spring' as const,
-            stiffness: 500,
-            damping: 35
-        }
-    }
-};
 
 export default function App() {
     const {
@@ -76,12 +52,12 @@ export default function App() {
             <main className="main-content">
                 <motion.div
                     className="content-container"
-                    variants={containerVariants}
+                    variants={staggerContainer}
                     initial="hidden"
                     animate="visible"
                 >
                     {/* Welcome nudge or status */}
-                    <motion.div variants={itemVariants}>
+                    <motion.div variants={fadeInUp}>
                         <Nudge
                             todayCount={todayCount}
                             completedCount={completedCount}
@@ -91,26 +67,26 @@ export default function App() {
                     </motion.div>
 
                     {/* Quick task input */}
-                    <motion.div variants={itemVariants}>
+                    <motion.div variants={fadeInUp}>
                         <TaskInput />
                     </motion.div>
 
                     {/* Filter tabs */}
-                    <motion.div variants={itemVariants}>
+                    <motion.div variants={fadeInUp}>
                         <FilterBar />
                     </motion.div>
 
                     {/* Task list */}
-                    <motion.div variants={itemVariants}>
+                    <motion.div variants={fadeInUp}>
                         <AnimatePresence mode="wait" initial={false}>
                             {isLoading ? (
                                 <motion.div
                                     key="loading"
                                     className="loading-state"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{ duration: 0.1 }}
+                                    variants={fadeIn}
+                                    initial="hidden"
+                                    animate="visible"
+                                    exit="hidden"
                                 >
                                     <div className="loading-skeleton shimmer" />
                                     <div className="loading-skeleton shimmer" />
@@ -119,10 +95,10 @@ export default function App() {
                             ) : (
                                 <motion.div
                                     key={activeFilter}
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{ duration: 0.1 }}
+                                    variants={fadeIn}
+                                    initial="hidden"
+                                    animate="visible"
+                                    exit="hidden"
                                 >
                                     {activeFilter === 'today' ? (
                                         <Dashboard />

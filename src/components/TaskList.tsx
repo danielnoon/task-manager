@@ -3,6 +3,7 @@ import { ViewFilter } from '../lib/types';
 import TaskCard from './TaskCard';
 import { useTaskStore } from '../stores/taskStore';
 import { motion, AnimatePresence } from 'framer-motion';
+import { staggerContainerFast, fadeInUpSmall, fadeInScale, iconBounceIn, slideUp, slideInRight } from '../constants/animations';
 import './TaskList.css';
 
 interface TaskListProps {
@@ -18,46 +19,21 @@ export default function TaskList({ tasks, filter }: TaskListProps) {
     const isSmartView = filter === 'today' && todayTaskCount() === 0 && tasks.length > 0;
     const showClearButton = filter === 'completed' && tasks.length > 0;
 
-    // Animation variants
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.04,
-                delayChildren: 0.02
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 12 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                type: 'spring' as const,
-                stiffness: 500,
-                damping: 35
-            }
-        }
-    };
-
     // Empty state
     if (tasks.length === 0) {
         return (
             <motion.div
                 className="task-list-empty"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
+                variants={fadeInScale}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
             >
                 <motion.div
                     className="task-list-empty-icon"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.1, type: 'spring' as const, stiffness: 400, damping: 20 }}
+                    variants={iconBounceIn}
+                    initial="hidden"
+                    animate="visible"
                 >
                     {filter === 'completed' ? '🎉' : '✨'}
                 </motion.div>
@@ -84,10 +60,10 @@ export default function TaskList({ tasks, filter }: TaskListProps) {
                 {isSmartView && (
                     <motion.div
                         className="smart-view-header"
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
+                        variants={slideUp}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
                     >
                         <span className="smart-view-icon">✨</span>
                         <span className="smart-view-text">You're all caught up! Here's what's next:</span>
@@ -100,10 +76,10 @@ export default function TaskList({ tasks, filter }: TaskListProps) {
                 {showClearButton && (
                     <motion.div
                         className="list-actions"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 20 }}
-                        transition={{ duration: 0.2 }}
+                        variants={slideInRight}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
                         style={{ marginBottom: 'var(--space-4)', display: 'flex', justifyContent: 'flex-end' }}
                     >
                         <button
@@ -119,14 +95,14 @@ export default function TaskList({ tasks, filter }: TaskListProps) {
             {/* Task cards */}
             <motion.div
                 className="task-grid"
-                variants={containerVariants}
+                variants={staggerContainerFast}
                 initial="hidden"
                 animate="visible"
             >
                 {tasks.map((task) => (
                     <motion.div
                         key={task.id}
-                        variants={itemVariants}
+                        variants={fadeInUpSmall}
                     >
                         <TaskCard task={task} />
                     </motion.div>

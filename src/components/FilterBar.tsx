@@ -1,6 +1,7 @@
 import { useTaskStore } from '../stores/taskStore';
 import { ViewFilter } from '../lib/types';
 import { motion, AnimatePresence } from 'framer-motion';
+import { springTransition, collapseExpand, hoverScale } from '../constants/animations';
 import './FilterBar.css';
 
 const filters: { key: ViewFilter; label: string }[] = [
@@ -53,7 +54,7 @@ export default function FilterBar() {
                             <motion.div
                                 className="filter-indicator"
                                 layoutId="filterIndicator"
-                                transition={{ type: 'spring' as const, stiffness: 500, damping: 35 }}
+                                transition={springTransition}
                             />
                         )}
                     </button>
@@ -65,16 +66,15 @@ export default function FilterBar() {
                 {categories.length > 0 && (
                     <motion.div
                         className="category-chips"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.2 }}
+                        variants={collapseExpand}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
                     >
                         <motion.button
                             className={`category-chip ${activeCategory === null ? 'active' : ''}`}
                             onClick={() => setCategoryFilter(null)}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                            {...hoverScale}
                         >
                             All
                         </motion.button>
@@ -86,8 +86,7 @@ export default function FilterBar() {
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: index * 0.05 }}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
+                                {...hoverScale}
                             >
                                 {category}
                             </motion.button>

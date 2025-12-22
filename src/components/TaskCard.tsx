@@ -1,7 +1,8 @@
-import { CSSProperties, useState, useRef, useEffect } from 'react';
+import { CSSProperties, useState, useRef } from 'react';
 import { Task } from '../lib/types';
 import { useTaskStore } from '../stores/taskStore';
 import { formatDistanceToNow, isToday, isPast, format, addDays, nextMonday } from 'date-fns';
+import { useClickOutside } from '../hooks/useClickOutside';
 import './TaskCard.css';
 
 interface TaskCardProps {
@@ -19,15 +20,7 @@ export default function TaskCard({ task, style }: TaskCardProps) {
     const buttonRef = useRef<HTMLButtonElement>(null);
 
     // Close date picker when clicking outside
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (datePickerRef.current && !datePickerRef.current.contains(event.target as Node)) {
-                setShowDatePicker(false);
-            }
-        }
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
+    useClickOutside(datePickerRef, () => setShowDatePicker(false));
 
     // Check if dropdown should drop up based on available space
     const toggleDatePicker = () => {

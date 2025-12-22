@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useTaskStore } from '../stores/taskStore';
 import TaskCard from './TaskCard';
 import { motion, AnimatePresence } from 'framer-motion';
+import { staggerContainerUltraFast, fadeInUpSmall, fadeIn, delayedFadeIn } from '../constants/animations';
 import './Dashboard.css';
 
 export default function Dashboard() {
@@ -66,44 +67,20 @@ export default function Dashboard() {
     const totalToday = focusTasks.length + otherTodayTasks.length + completedToday;
     const progress = totalToday === 0 ? 100 : (completedToday / totalToday) * 100;
 
-    // Animation variants
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.05,
-                delayChildren: 0.02
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 12 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                type: 'spring' as const,
-                stiffness: 500,
-                damping: 35
-            }
-        }
-    };
-
     return (
         <motion.div
             className="dashboard"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
         >
             {/* Loading state while generating Focus Queue */}
             {isAnalyzing && (
                 <motion.div
                     className="plan-cta"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
+                    variants={fadeIn}
+                    initial="hidden"
+                    animate="visible"
                 >
                     <span className="plan-button-text">Generating Focus Queue...</span>
                 </motion.div>
@@ -115,14 +92,14 @@ export default function Dashboard() {
                     <section className="task-section focus-section">
                         <motion.div
                             className="task-grid"
-                            variants={containerVariants}
+                            variants={staggerContainerUltraFast}
                             initial="hidden"
                             animate="visible"
                         >
                             {focusTasks.map((task, index) => (
                                 <motion.div
                                     key={task.id}
-                                    variants={itemVariants}
+                                    variants={fadeInUpSmall}
                                     className="task-card-wrapper"
                                 >
                                     <TaskCard task={task} />
@@ -139,14 +116,14 @@ export default function Dashboard() {
                         </h2>
                         <motion.div
                             className="task-grid"
-                            variants={containerVariants}
+                            variants={staggerContainerUltraFast}
                             initial="hidden"
                             animate="visible"
                         >
                             {otherTodayTasks.map((task) => (
                                 <motion.div
                                     key={task.id}
-                                    variants={itemVariants}
+                                    variants={fadeInUpSmall}
                                     className="task-card-wrapper"
                                 >
                                     <TaskCard task={task} />
@@ -161,9 +138,9 @@ export default function Dashboard() {
             {focusTasks.length === 0 && otherTodayTasks.length === 0 && (
                 <motion.div
                     className="dashboard-empty"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
+                    initial="hidden"
+                    animate="visible"
+                    transition={delayedFadeIn}
                 >
                     <div className="empty-check">✓</div>
                     <p>Nothing on the agenda</p>

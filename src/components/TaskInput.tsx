@@ -1,5 +1,6 @@
-import { useState, KeyboardEvent, useMemo, useRef, useEffect } from 'react';
+import { useState, KeyboardEvent, useMemo, useRef } from 'react';
 import { useTaskStore } from '../stores/taskStore';
+import { useAutoFocus } from '../hooks/useAutoFocus';
 import './TaskInput.css';
 
 export default function TaskInput({
@@ -59,18 +60,7 @@ export default function TaskInput({
     const isSubmittingRef = useRef(false);
 
     // Auto-focus input on mount and window focus
-    useEffect(() => {
-        const focusInput = () => {
-            // Small timeout prevents fighting with other focus events
-            setTimeout(() => {
-                inputRef.current?.focus();
-            }, 10);
-        };
-
-        focusInput();
-        window.addEventListener('focus', focusInput);
-        return () => window.removeEventListener('focus', focusInput);
-    }, []);
+    useAutoFocus(inputRef);
 
     const handleSubmit = async () => {
         const content = value.trim();
