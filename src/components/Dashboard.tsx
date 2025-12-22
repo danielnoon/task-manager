@@ -1,8 +1,9 @@
 import { useEffect, useMemo } from 'react';
 import { useTaskStore } from '../stores/taskStore';
 import TaskCard from './TaskCard';
+import EmptyState from './EmptyState';
 import { motion, AnimatePresence } from 'framer-motion';
-import { staggerContainerUltraFast, fadeInUpSmall, fadeIn, delayedFadeIn } from '../constants/animations';
+import { staggerContainerUltraFast, fadeInUpSmall, fadeIn } from '../constants/animations';
 import './Dashboard.css';
 
 export default function Dashboard() {
@@ -136,15 +137,10 @@ export default function Dashboard() {
 
             {/* Empty State — Clean, minimal */}
             {focusTasks.length === 0 && otherTodayTasks.length === 0 && (
-                <motion.div
-                    className="dashboard-empty"
-                    initial="hidden"
-                    animate="visible"
-                    transition={delayedFadeIn}
-                >
-                    <div className="empty-check">✓</div>
-                    <p>Nothing on the agenda</p>
-                </motion.div>
+                <EmptyState
+                    icon="✓"
+                    title="Nothing on the agenda"
+                />
             )}
         </motion.div>
     );

@@ -8,7 +8,8 @@ import Dashboard from './components/Dashboard';
 import FilterBar from './components/FilterBar';
 import Nudge from './components/Nudge';
 import SettingsModal from './components/SettingsModal';
-import { staggerContainer, fadeInUp, fadeIn, quickFade } from './constants/animations';
+import LoadingState from './components/LoadingState';
+import { staggerContainer, fadeInUp, fadeIn } from './constants/animations';
 import './App.css';
 
 export default function App() {
@@ -80,18 +81,7 @@ export default function App() {
                     <motion.div variants={fadeInUp}>
                         <AnimatePresence mode="wait" initial={false}>
                             {isLoading ? (
-                                <motion.div
-                                    key="loading"
-                                    className="loading-state"
-                                    variants={fadeIn}
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="hidden"
-                                >
-                                    <div className="loading-skeleton shimmer" />
-                                    <div className="loading-skeleton shimmer" />
-                                    <div className="loading-skeleton shimmer" />
-                                </motion.div>
+                                <LoadingState key="loading" count={3} height={72} />
                             ) : (
                                 <motion.div
                                     key={activeFilter}

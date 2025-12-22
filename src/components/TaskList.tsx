@@ -1,9 +1,10 @@
 import { Task } from '../lib/types';
 import { ViewFilter } from '../lib/types';
 import TaskCard from './TaskCard';
+import EmptyState from './EmptyState';
 import { useTaskStore } from '../stores/taskStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { staggerContainerFast, fadeInUpSmall, fadeInScale, iconBounceIn, slideUp, slideInRight } from '../constants/animations';
+import { staggerContainerFast, fadeInUpSmall, slideUp, slideInRight } from '../constants/animations';
 import './TaskList.css';
 
 interface TaskListProps {
@@ -21,36 +22,29 @@ export default function TaskList({ tasks, filter }: TaskListProps) {
 
     // Empty state
     if (tasks.length === 0) {
-        return (
-            <motion.div
-                className="task-list-empty"
-                variants={fadeInScale}
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-            >
-                <motion.div
-                    className="task-list-empty-icon"
-                    variants={iconBounceIn}
-                    initial="hidden"
-                    animate="visible"
-                >
-                    {filter === 'completed' ? '🎉' : '✨'}
-                </motion.div>
-                <p className="task-list-empty-text">
-                    {filter === 'completed'
-                        ? "No completed tasks yet"
-                        : filter === 'upcoming'
-                            ? "Nothing scheduled ahead"
-                            : "Your mind is clear!"}
-                </p>
-                <p className="task-list-empty-hint">
-                    {filter === 'completed'
-                        ? "Complete some tasks to see them here"
-                        : "Add a task above to get started"}
-                </p>
-            </motion.div>
-        );
+        const getEmptyStateProps = () => {
+            if (filter === 'completed') {
+                return {
+                    icon: '🎉',
+                    title: 'No completed tasks yet',
+                    description: 'Complete some tasks to see them here',
+                };
+            } else if (filter === 'upcoming') {
+                return {
+                    icon: '✨',
+                    title: 'Nothing scheduled ahead',
+                    description: 'Add a task above to get started',
+                };
+            } else {
+                return {
+                    icon: '✨',
+                    title: 'Your mind is clear!',
+                    description: 'Add a task above to get started',
+                };
+            }
+        };
+
+        return <EmptyState {...getEmptyStateProps()} />;
     }
 
     return (

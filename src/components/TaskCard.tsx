@@ -1,8 +1,8 @@
 import { CSSProperties, useState, useRef } from 'react';
 import { Task } from '../lib/types';
 import { useTaskStore } from '../stores/taskStore';
-import { formatDistanceToNow, isToday, isPast, format, addDays, nextMonday } from 'date-fns';
-import { useClickOutside } from '../hooks/useClickOutside';
+import { formatDistanceToNow, isToday, isPast, format } from 'date-fns';
+import DatePicker from './DatePicker';
 import './TaskCard.css';
 
 interface TaskCardProps {
@@ -15,21 +15,9 @@ export default function TaskCard({ task, style }: TaskCardProps) {
     const isCompleted = task.status === 'completed';
     const [showNotes, setShowNotes] = useState(false);
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const [dropUp, setDropUp] = useState(false);
-    const datePickerRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
 
-    // Close date picker when clicking outside
-    useClickOutside(datePickerRef, () => setShowDatePicker(false));
-
-    // Check if dropdown should drop up based on available space
     const toggleDatePicker = () => {
-        if (!showDatePicker && buttonRef.current) {
-            const rect = buttonRef.current.getBoundingClientRect();
-            const spaceBelow = window.innerHeight - rect.bottom;
-            const dropdownHeight = 250; // Approximate dropdown height
-            setDropUp(spaceBelow < dropdownHeight);
-        }
         setShowDatePicker(!showDatePicker);
     };
 
@@ -57,16 +45,7 @@ export default function TaskCard({ task, style }: TaskCardProps) {
 
     const handleSetDueDate = (date: Date | null) => {
         updateTask(task.id, { dueDate: date });
-        setShowDatePicker(false);
     };
-
-    const datePresets = [
-        { label: 'Today', date: new Date() },
-        { label: 'Tomorrow', date: addDays(new Date(), 1) },
-        { label: 'Next Week', date: nextMonday(new Date()) },
-        { label: 'In 3 days', date: addDays(new Date(), 3) },
-        { label: 'No date', date: null },
-    ];
 
     const dueInfo = formatDueDate(task.dueDate);
     const hasNotes = task.notes && task.notes.trim().length > 0;
@@ -95,7 +74,7 @@ export default function TaskCard({ task, style }: TaskCardProps) {
                     )}
 
                     {/* Due date with picker */}
-                    <div className="due-date-wrapper" ref={datePickerRef}>
+                    <div className="due-date-wrapper">
                         <button
                             ref={buttonRef}
                             className={`due-date-btn ${dueInfo?.className || ''} ${!dueInfo ? 'no-date' : ''}`}
@@ -105,75 +84,20 @@ export default function TaskCard({ task, style }: TaskCardProps) {
                         </button>
 
                         {showDatePicker && (
-                            <div className={`date-picker-dropdown ${dropUp ? 'drop-up' : ''}`}>
-                                {datePresets.map(({ label, date }) => (
-                                    <button
-                                        key={label}
-                                        className={`date-preset ${date === null && !task.dueDate ? 'active' : ''}`}
-                                        onClick={() => handleSetDueDate(date)}
-                                    >
-                                        {label}
-                                    </button>
-                                ))}
-                                <div className="date-picker-divider" />
-                                <input
-                                    type="date"
-                                    className="custom-date-input"
-                                    value={task.dueDate ? format(new Date(task.dueDate), 'yyyy-MM-dd') : ''}
-                                    onChange={(e) => handleSetDueDate(e.target.value ? new Date(e.target.value) : null)}
-                                />
-                                {/* Time picker */}
-                                <div className="date-picker-row">
-                                    <label>⏰ Time</label>
-                                    <input
-                                        type="time"
-                                        className="time-input-small"
-                                        value={task.dueTime || ''}
-                                        onChange={(e) => updateTask(task.id, { dueTime: e.target.value || null })}
-                                    />
-                                </div>
-                                {/* Recurrence */}
-                                <div className="date-picker-row">
-                                    <label>🔄 Repeat</label>
-                                    <select
-                                        className="recurrence-select"
-                                        value={task.recurrence}
-                                        onChange={(e) => updateTask(task.id, { recurrence: e.target.value as any })}
-                                    >
-                                        <option value="none">Never</option>
-                                        <option value="daily">Daily</option>
-                                        <option value="weekly">Weekly</option>
-                                        <option value="monthly">Monthly</option>
-                                    </select>
-                                </div>
-                                {/* Weekly day selection */}
-                                {task.recurrence === 'weekly' && (
-                                    <div className="weekly-days">
-                                        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => {
-                                            const selectedDays = task.recurrenceDays?.split(',').map(Number) || [];
-                                            const isSelected = selectedDays.includes(index);
-                                            return (
-                                                <button
-                                                    key={index}
-                                                    className={`day-btn ${isSelected ? 'active' : ''}`}
-                                                    onClick={() => {
-                                                        const newDays = isSelected
-                                                            ? selectedDays.filter(d => d !== index)
-                                                            : [...selectedDays, index];
-                                                        updateTask(task.id, {
-                                                            recurrenceDays: newDays.length > 0
-                                                                ? newDays.sort((a, b) => a - b).join(',')
-                                                                : null
-                                                        });
-                                                    }}
-                                                >
-                                                    {day}
-                                                </button>
-                                            );
-                                        })}
-                                    </div>
-                                )}
-                            </div>
+                            <DatePicker
+                                value={task.dueDate}
+                                onChange={handleSetDueDate}
+                                showTime={true}
+                                showRecurrence={true}
+                                dueTime={task.dueTime}
+                                recurrence={task.recurrence}
+                                recurrenceDays={task.recurrenceDays}
+                                onTimeChange={(time) => updateTask(task.id, { dueTime: time })}
+                                onRecurrenceChange={(recurrence) => updateTask(task.id, { recurrence: recurrence as any })}
+                                onRecurrenceDaysChange={(days) => updateTask(task.id, { recurrenceDays: days })}
+                                onClose={() => setShowDatePicker(false)}
+                                buttonRef={buttonRef}
+                            />
                         )}
                     </div>
 

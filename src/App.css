@@ -47,18 +47,6 @@
     gap: var(--space-8);
 }
 
-/* Loading state */
-.loading-state {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-}
-
-.loading-skeleton {
-    height: 72px;
-    border-radius: var(--radius-lg);
-}
-
 /* Smart View Header */
 .smart-view-header {
     display: flex;
