@@ -3,6 +3,7 @@ import { ViewFilter } from '../lib/types';
 import TaskCard from './TaskCard';
 import EmptyState from './EmptyState';
 import { useTaskStore } from '../stores/taskStore';
+import { Button } from './ui';
 import { motion, AnimatePresence } from 'framer-motion';
 import { staggerContainerFast, fadeInUpSmall, slideUp, slideInRight } from '../constants/animations';
 import './TaskList.css';
@@ -76,12 +77,13 @@ export default function TaskList({ tasks, filter }: TaskListProps) {
                         exit="hidden"
                         style={{ marginBottom: 'var(--space-4)', display: 'flex', justifyContent: 'flex-end' }}
                     >
-                        <button
+                        <Button
+                            variant="text"
                             onClick={clearCompleted}
-                            className="btn-text danger"
+                            className="danger"
                         >
                             Clear Completed
-                        </button>
+                        </Button>
                     </motion.div>
                 )}
             </AnimatePresence>

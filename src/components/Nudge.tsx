@@ -1,4 +1,5 @@
 import { Nudge as NudgeType } from '../lib/types';
+import { ProgressRing, Button } from './ui';
 import './Nudge.css';
 
 interface NudgeProps {
@@ -80,29 +81,28 @@ export default function Nudge({
                 </div>
 
                 {/* Progress Ring */}
-                <div className="nudge-progress">
-                    <svg width="44" height="44" viewBox="0 0 44 44">
-                        <circle className="nudge-progress-bg" cx="22" cy="22" r="18" />
-                        <circle
-                            className="nudge-progress-fill"
-                            cx="22" cy="22" r="18"
-                            strokeDasharray={2 * Math.PI * 18}
-                            strokeDashoffset={2 * Math.PI * 18 * (1 - progress / 100)}
-                        />
-                    </svg>
-                    <span className="nudge-progress-value">{Math.round(progress)}%</span>
-                </div>
+                <ProgressRing
+                    value={progress}
+                    max={100}
+                    size={44}
+                    strokeWidth={4}
+                    showLabel={true}
+                    color="accent"
+                    className="nudge-progress"
+                />
             </div>
 
             {/* Dismiss button for active nudge */}
             {activeNudge && (
-                <button
+                <Button
+                    variant="ghost"
+                    size="sm"
                     className="nudge-dismiss"
                     onClick={onDismiss}
                     title="Dismiss"
                 >
                     ✕
-                </button>
+                </Button>
             )}
         </div>
     );

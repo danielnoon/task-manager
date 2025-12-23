@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTaskStore } from '../stores/taskStore';
+import { Modal, Toggle, Button, Input } from './ui';
 import './SettingsModal.css';
 
 interface SettingsModalProps {
@@ -41,21 +42,23 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
         }
     };
 
-    if (!isOpen) return null;
-
     return (
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal" onClick={(e) => e.stopPropagation()}>
-                <div className="modal-header">
-                    <h2>Settings</h2>
-                    <button className="modal-close" onClick={onClose}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M18 6L6 18M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-
-                <div className="modal-body">
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            title="Settings"
+            footer={
+                <>
+                    <Button variant="secondary" onClick={onClose}>
+                        Cancel
+                    </Button>
+                    <Button variant="primary" onClick={handleSave} disabled={isSaving}>
+                        {isSaving ? 'Saving...' : 'Save Settings'}
+                    </Button>
+                </>
+            }
+        >
+            <div className="settings-modal-content">
                     <div className="settings-section">
                         <h3>AI Configuration</h3>
                         <p className="settings-description">
@@ -68,10 +71,9 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
                         <div className="form-group">
                             <label htmlFor="apiKey">Anthropic API Key</label>
-                            <input
+                            <Input
                                 id="apiKey"
                                 type="password"
-                                className="input"
                                 placeholder="sk-ant-..."
                                 value={apiKey}
                                 onChange={(e) => setApiKey(e.target.value)}
@@ -91,25 +93,21 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                         </p>
 
                         <div className="form-group">
-                            <label className="toggle-label">
-                                <input
-                                    type="checkbox"
-                                    checked={notificationsEnabled}
-                                    onChange={(e) => setNotificationsEnabled(e.target.checked)}
-                                />
-                                <span className="toggle-switch"></span>
-                                Enable Notifications
-                            </label>
+                            <Toggle
+                                checked={notificationsEnabled}
+                                onChange={setNotificationsEnabled}
+                                label="Enable Notifications"
+                            />
                         </div>
 
                         {notificationsEnabled && (
                             <>
                                 <div className="form-group">
                                     <label htmlFor="morningTime">Morning Check-in</label>
-                                    <input
+                                    <Input
                                         id="morningTime"
                                         type="time"
-                                        className="input time-input"
+                                        className="time-input"
                                         value={morningTime}
                                         onChange={(e) => setMorningTime(e.target.value)}
                                     />
@@ -117,10 +115,10 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
                                 <div className="form-group">
                                     <label htmlFor="middayTime">Mid-day Check-in</label>
-                                    <input
+                                    <Input
                                         id="middayTime"
                                         type="time"
-                                        className="input time-input"
+                                        className="time-input"
                                         value={middayTime}
                                         onChange={(e) => setMiddayTime(e.target.value)}
                                     />
@@ -132,32 +130,24 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     <div className="settings-section">
                         <h3>Theme</h3>
                         <div className="theme-options">
-                            <button
-                                className={`theme-option ${settings?.theme === 'dark' ? 'active' : ''}`}
+                            <Button
+                                variant={settings?.theme === 'dark' ? 'primary' : 'secondary'}
+                                className="theme-option"
                                 onClick={() => updateSettings({ theme: 'dark' })}
                             >
                                 🌙 Dark
-                            </button>
-                            <button
-                                className={`theme-option ${settings?.theme === 'light' ? 'active' : ''}`}
+                            </Button>
+                            <Button
+                                variant={settings?.theme === 'light' ? 'primary' : 'secondary'}
+                                className="theme-option"
                                 onClick={() => updateSettings({ theme: 'light' })}
                             >
                                 ☀️ Light
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>
-
-                <div className="modal-footer">
-                    <button className="btn btn-secondary" onClick={onClose}>
-                        Cancel
-                    </button>
-                    <button className="btn btn-primary" onClick={handleSave} disabled={isSaving}>
-                        {isSaving ? 'Saving...' : 'Save Settings'}
-                    </button>
-                </div>
-            </div>
-        </div>
+        </Modal>
     );
 }
 

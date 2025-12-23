@@ -1,6 +1,7 @@
 import { useState, KeyboardEvent, useMemo, useRef } from 'react';
 import { useTaskStore } from '../stores/taskStore';
 import { useAutoFocus } from '../hooks/useAutoFocus';
+import { Input, Badge } from './ui';
 import './TaskInput.css';
 
 export default function TaskInput({
@@ -130,9 +131,10 @@ export default function TaskInput({
 
     return (
         <div className="task-input-wrapper">
-            <input
+            <Input
                 ref={inputRef}
                 type="text"
+                variant="command"
                 className={`task-input ${isCommand ? 'is-command' : ''}`}
                 placeholder={placeholder}
                 value={value}
@@ -173,7 +175,9 @@ export default function TaskInput({
                         >
                             <span className="suggestion-content">{task.content}</span>
                             {task.category && (
-                                <span className="suggestion-category">{task.category}</span>
+                                <Badge variant="default" size="sm" className="suggestion-category">
+                                    {task.category}
+                                </Badge>
                             )}
                         </button>
                     ))}

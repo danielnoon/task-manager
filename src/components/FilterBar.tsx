@@ -1,5 +1,6 @@
 import { useTaskStore } from '../stores/taskStore';
 import { ViewFilter } from '../lib/types';
+import { Badge } from './ui';
 import { motion, AnimatePresence } from 'framer-motion';
 import { springTransition, collapseExpand, hoverScale } from '../constants/animations';
 import './FilterBar.css';

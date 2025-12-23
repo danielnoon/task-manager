@@ -3,6 +3,7 @@ import { Task } from '../lib/types';
 import { useTaskStore } from '../stores/taskStore';
 import { formatDistanceToNow, isToday, isPast, format } from 'date-fns';
 import DatePicker from './DatePicker';
+import { Badge, Button } from './ui';
 import './TaskCard.css';
 
 interface TaskCardProps {
@@ -70,7 +71,9 @@ export default function TaskCard({ task, style }: TaskCardProps) {
 
                 <div className="task-meta">
                     {task.category && (
-                        <span className="task-category">{task.category}</span>
+                        <Badge variant="default" size="sm" className="task-category">
+                            {task.category}
+                        </Badge>
                     )}
 
                     {/* Due date with picker */}
@@ -102,12 +105,14 @@ export default function TaskCard({ task, style }: TaskCardProps) {
                     </div>
 
                     {hasNotes && (
-                        <button
+                        <Button
+                            variant="ghost"
+                            size="sm"
                             className={`notes-toggle ${showNotes ? 'expanded' : ''}`}
                             onClick={() => setShowNotes(!showNotes)}
                         >
                             📝 {showNotes ? 'Hide' : 'Notes'}
-                        </button>
+                        </Button>
                     )}
                 </div>
 
@@ -120,15 +125,18 @@ export default function TaskCard({ task, style }: TaskCardProps) {
             </div>
 
             <div className="task-actions">
-                <button
+                <Button
+                    variant="ghost"
+                    size="sm"
                     className="task-action-btn delete"
                     onClick={() => deleteTask(task.id)}
                     aria-label="Delete task"
-                >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                    </svg>
-                </button>
+                    icon={
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                        </svg>
+                    }
+                />
             </div>
         </div>
     );
