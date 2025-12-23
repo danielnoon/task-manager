@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type RefObject, type FC } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Dropdown.css';
 
@@ -15,11 +15,11 @@ export interface DropdownProps {
   onSelect: (item: DropdownItem) => void;
   onClose?: () => void;
   position?: 'auto' | 'top' | 'bottom';
-  triggerRef?: React.RefObject<HTMLElement>;
+  triggerRef?: RefObject<HTMLElement>;
   className?: string;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({
+const Dropdown: FC<DropdownProps> = ({
   isOpen,
   items,
   onSelect,

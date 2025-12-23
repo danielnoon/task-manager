@@ -1,13 +1,13 @@
-import React from 'react';
+import { forwardRef, type ReactNode, type HTMLAttributes } from 'react';
 import './Badge.css';
 
-export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: 'default' | 'accent' | 'success' | 'error' | 'warning';
   size?: 'sm' | 'md';
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
-const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
+const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
   ({ variant = 'default', size = 'md', className = '', children, ...props }, ref) => {
     const classes = [
       'ui-badge',

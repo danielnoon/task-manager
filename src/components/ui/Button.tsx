@@ -1,14 +1,14 @@
-import React from 'react';
+import { forwardRef, type ReactNode, type ButtonHTMLAttributes } from 'react';
 import './Button.css';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'text' | 'danger';
   size?: 'sm' | 'md' | 'lg';
-  icon?: React.ReactNode;
-  children?: React.ReactNode;
+  icon?: ReactNode;
+  children?: ReactNode;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'primary', size = 'md', icon, children, className = '', ...props }, ref) => {
     const classes = [
       'ui-button',

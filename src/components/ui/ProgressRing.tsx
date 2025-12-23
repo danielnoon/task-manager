@@ -1,4 +1,4 @@
-import React from 'react';
+import { type FC } from 'react';
 import './ProgressRing.css';
 
 export interface ProgressRingProps {
@@ -11,7 +11,7 @@ export interface ProgressRingProps {
   className?: string;
 }
 
-const ProgressRing: React.FC<ProgressRingProps> = ({
+const ProgressRing: FC<ProgressRingProps> = ({
   value,
   max = 100,
   size = 100,

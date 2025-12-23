@@ -1,15 +1,15 @@
-import React from 'react';
+import { forwardRef, type ReactNode, type HTMLAttributes } from 'react';
 import './Card.css';
 
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'interactive' | 'elevated';
   hover?: boolean;
   border?: boolean;
   padding?: 'none' | 'sm' | 'md' | 'lg';
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
-const Card = React.forwardRef<HTMLDivElement, CardProps>(
+const Card = forwardRef<HTMLDivElement, CardProps>(
   (
     {
       variant = 'default',

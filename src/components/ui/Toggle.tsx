@@ -1,18 +1,18 @@
-import React from 'react';
+import { forwardRef, type InputHTMLAttributes, type ChangeEvent } from 'react';
 import './Toggle.css';
 
-export interface ToggleProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
+export interface ToggleProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> {
   checked: boolean;
   onChange: (checked: boolean) => void;
   label?: string;
   description?: string;
 }
 
-const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>(
+const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
   ({ checked, onChange, label, description, className = '', id, ...props }, ref) => {
     const toggleId = id || `toggle-${Math.random().toString(36).substr(2, 9)}`;
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       onChange(e.target.checked);
     };
 
